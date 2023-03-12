@@ -6,7 +6,7 @@ include "aes_256_encrypt.circom";
 include "aes_256_ctr.circom";
 include "polyval.circom";
 include "helper_functions.circom";
-include "../node_modules/circomlib/circuits/mux1.circom";
+include "../../../circomlib/circuits/mux1.circom";
 
 template GCM_SIV_DEC_2_Keys(n_bits_aad, n_bits_msg)
 {
