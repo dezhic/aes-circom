@@ -26,6 +26,10 @@ template AES256CTR(n_bits)
 
     for(i=0; i<msg_len/16; i++)
     {
+        // log("ctr", i);
+        // for (var m = 0; m < 128; m++) {
+        //     log(ctr_t[m]);
+        // }
         aes_256_encrypt_1[i] = AES256Encrypt();
         for(j=0; j<128; j++) aes_256_encrypt_1[i].in[j] <== ctr_t[j];
         for(j=0; j<1920; j++) aes_256_encrypt_1[i].ks[j] <== ks[j];
@@ -46,16 +50,10 @@ template AES256CTR(n_bits)
                 }
             }
         }
-        bits2num_1[i] = Bits2Num(32);
-        num2bits_1[i] = Num2Bits(32);
-        for(j=0; j<4; j++) 
-        {
-            for(k=0; k<8; k++) bits2num_1[i].in[j*8+k] <== ctr_t[j*8+7-k];
-        }
+        bits2num_1[i] = Bits2Num(64);
+        num2bits_1[i] = Num2Bits(64);
+        for(k=0; k<64; k++) bits2num_1[i].in[k] <== ctr_t[64+63-k];
         num2bits_1[i].in <== bits2num_1[i].out + 1;
-        for(j=0; j<4; j++)
-        {
-            for(k=0; k<8; k++) ctr_t[j*8+k] = num2bits_1[i].out[j*8+7-k];
-        }
+        for(k=0; k<64; k++) ctr_t[64+k] = num2bits_1[i].out[63-k];
     }
 }
